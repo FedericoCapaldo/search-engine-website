@@ -18,21 +18,24 @@ public class ServiceMain {
         Spark.get("/search", (request, response) -> {
             String query = request.queryParams("search");
             HashMap<Integer, String[]> results = searchEngine.search(query);
-            String finalResponse = "";
+            StringBuilder finalResponse = new StringBuilder();
+            StringBuilder res = new StringBuilder();
 
             for (int i : results.keySet()) {
-                finalResponse += "<div class=\"result\">";
-                finalResponse += i + ". ";
-                finalResponse += "<span> (" +results.get(i)[0] + ") </span>" + " ";
-                finalResponse += "<span>" + results.get(i)[1] + "</span>";
-                finalResponse += "<br>";
-                finalResponse += "<a href=\"" + "http://" + results.get(i)[2] + "\">" + results.get(i)[2] + "</a>";
-                finalResponse += "<br>";
-                finalResponse += "<br><br>";
-                finalResponse += "</div>";
+                finalResponse.append("<p class=\"result\">");
+                finalResponse.append(i + ". ");
+                finalResponse.append("<span> (" +results.get(i)[0] + ") </span>" + " ");
+                finalResponse.append("<span>" + results.get(i)[1] + "</span>");
+                finalResponse.append("<br>");
+                finalResponse.append("<a href=\"" + "http://" + results.get(i)[2] + "\">" + results.get(i)[2] + "</a>");
+                finalResponse.append("<br>");
+                finalResponse.append("<br><br>");
+                finalResponse.append("</p>");
             }
+
+            res.append(HTML.getHTML() + finalResponse.toString() + "</body></html>");
             // searchEngine.shutdown();
-            return finalResponse;
+            return res.toString();
         });
 
         // this is just what you can do with the request but we don't need it
