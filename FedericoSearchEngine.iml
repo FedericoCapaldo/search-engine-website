@@ -72,5 +72,10 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="lucene-queryparser-6.4.1" level="project" />
+    <orderEntry type="library" name="json-simple-1.1.1" level="project" />
+    <orderEntry type="library" name="jsoup-1.10.2" level="project" />
+    <orderEntry type="library" name="lucene-analyzers-common-6.4.1" level="project" />
+    <orderEntry type="library" name="lucene-core-6.4.1" level="project" />
   </component>
 </module>

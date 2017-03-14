@@ -75,7 +75,7 @@ public class FileOpener
 
     public static String getBaseFolder() throws UnsupportedEncodingException {
         String filePath = URLDecoder.decode(FileOpener.class.getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8");
-        String base = "FedericoSearchEngine";
+        String base = "search-engine-website";
         filePath = filePath.substring(0, filePath.indexOf(base)+base.length());
         return filePath;
     }

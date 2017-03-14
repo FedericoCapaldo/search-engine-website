@@ -16,6 +16,7 @@ public class HTML {
     public String renderContent(String htmlFile) {
         try {
             Path path = Paths.get(getHtmlFolder() + htmlFile);
+            System.out.println(getHtmlFolder() + " ----> " + htmlFile + " ----> " + path);
             return new String(Files.readAllBytes(path), Charset.defaultCharset());
         } catch (IOException e) {
             // Add your own exception handlers here.
@@ -32,7 +33,7 @@ public class HTML {
     // get project folder
     public static String getBaseFolder() throws UnsupportedEncodingException {
         String filePath = URLDecoder.decode(ServiceMain.class.getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8");
-        String base = "FedericoSearchEngine";
+        String base = "search-engine-website";
         filePath = filePath.substring(0, filePath.indexOf(base)+base.length());
         return filePath;
     }

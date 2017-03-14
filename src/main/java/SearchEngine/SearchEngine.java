@@ -11,9 +11,9 @@ import java.util.HashMap;
 public class SearchEngine
 {
 
-	Indexer indexer;
-	Searcher searcher;
-	DirectoryReader dr;
+	private Indexer indexer;
+	private Searcher searcher;
+	private DirectoryReader dr;
 
 	public SearchEngine()
 	{
