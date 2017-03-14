@@ -9,12 +9,12 @@ import java.util.Scanner;
 
 public class SearchEngine
 {
-	public static void initialize(String[] args)
+	public void initialize(String[] args)
 	{
 		try
 		{
 			Indexer indexer = new Indexer("index");
-			indexer.buildIndex();
+//			indexer.buildIndex();
 			Searcher searcher = new Searcher(indexer.getIndexer());
 			DirectoryReader dr = searcher.getIndexReader();
 			Scanner scanner = new Scanner(System.in);

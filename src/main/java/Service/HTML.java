@@ -25,10 +25,15 @@ public class HTML {
 
     // get the path to the project folder HTML
     public static String getHtmlFolder() throws UnsupportedEncodingException {
+        String filePath = getBaseFolder() + File.separator + "html" + File.separator;
+        return filePath;
+    }
+
+    // get project folder
+    public static String getBaseFolder() throws UnsupportedEncodingException {
         String filePath = URLDecoder.decode(ServiceMain.class.getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8");
         String base = "FedericoSearchEngine";
         filePath = filePath.substring(0, filePath.indexOf(base)+base.length());
-        filePath = filePath + File.separator + "html" + File.separator;
         return filePath;
     }
 }
