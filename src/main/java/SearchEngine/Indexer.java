@@ -1,3 +1,5 @@
+package SearchEngine;
+
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
