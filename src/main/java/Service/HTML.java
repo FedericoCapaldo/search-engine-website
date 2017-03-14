@@ -16,7 +16,6 @@ public class HTML {
     public String renderContent(String htmlFile) {
         try {
             Path path = Paths.get(getHtmlFolder() + htmlFile);
-            System.out.println(getHtmlFolder() + " ----> " + htmlFile + " ----> " + path);
             return new String(Files.readAllBytes(path), Charset.defaultCharset());
         } catch (IOException e) {
             // Add your own exception handlers here.
