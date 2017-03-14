@@ -1,58 +1,69 @@
 package SearchEngine;
 
+import Service.HTML;
 import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.ScoreDoc;
 
-import java.util.Scanner;
+import java.io.File;
+import java.util.HashMap;
 
 
 public class SearchEngine
 {
-	public void initialize(String[] args)
+
+	Indexer indexer;
+	Searcher searcher;
+	DirectoryReader dr;
+
+	public SearchEngine()
 	{
 		try
 		{
-			Indexer indexer = new Indexer("index");
+			String indexDirectory = HTML.getBaseFolder() + File.separator + "index" + File.separator;
+			indexer = new Indexer(indexDirectory);
 //			indexer.buildIndex();
-			Searcher searcher = new Searcher(indexer.getIndexer());
-			DirectoryReader dr = searcher.getIndexReader();
-			Scanner scanner = new Scanner(System.in);
-
-			while (true)
-			{
-				try
-				{
-					System.out.print("\n\nquery: ");
-					String query = scanner.nextLine();
-
-					if (query.equals("quit"))
-					{
-						break;
-					}
-
-					ScoreDoc[] results = searcher.search(query);
-
-					for (int hit = 0; hit < results.length; ++hit)
-					{
-						System.out.printf("%6d: (%6.2f) %s%n                 %s%n%n",
-								hit + 1,
-								results[hit].score,
-								dr.document(results[hit].doc).get("title"),
-								dr.document(results[hit].doc).get("url"));
-					}
-				}
-				catch (ParseException | NullPointerException e)
-				{
-					System.out.println("invalid query");
-				}
-			}
-
-			indexer.getIndexer().close();
-			dr.close();
+			searcher = new Searcher(indexer.getIndexer());
+			dr = searcher.getIndexReader();
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
+		}
+	}
+
+	public HashMap<Integer, String[]> search(String query) {
+
+		try {
+			ScoreDoc[] results = searcher.search(query);
+			return formatResult(results);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+
+	private HashMap<Integer, String[]> formatResult(ScoreDoc[] results) {
+		HashMap<Integer, String[]> formatted = new HashMap<>();
+		for (int hit = 0; hit < results.length; ++hit) {
+			try {
+				String[] resultInfo = {Float.toString(results[hit].score), dr.document(results[hit].doc).get("title"), dr.document(results[hit].doc).get("url")};
+				formatted.put(hit + 1, resultInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return formatted;
+	};
+
+
+
+	public void shutdown() {
+		try {
+			indexer.getIndexer().close();
+			dr.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -1,13 +1,10 @@
 package Service;
 
-import SearchEngine.Indexer;
-import SearchEngine.Searcher;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.search.ScoreDoc;
+import SearchEngine.SearchEngine;
 import spark.Spark;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class ServiceMain {
 
@@ -16,35 +13,29 @@ public class ServiceMain {
     public static void main(String args[]) throws IOException {
         HTML renderer = new HTML();
 
-        String indexDirectory = HTML.getBaseFolder() + File.separator + "index" + File.separator;
-        Indexer indexer = new Indexer(indexDirectory);
-//      indexer.buildIndex();
-        Searcher searcher = new Searcher(indexer.getIndexer());
-        DirectoryReader dr = searcher.getIndexReader();
-
-
+        SearchEngine searchEngine = new SearchEngine();
 
         Spark.get("/search", (request, response) -> {
             String query = request.queryParams("search");
-            ScoreDoc[] results = searcher.search(query);
-            String docs = "";
+            HashMap<Integer, String[]> results = searchEngine.search(query);
+            String finalResponse = "";
 
-            System.out.println(query);
-
-            for (int hit = 0; hit < results.length; ++hit) {
-
-                System.out.println(hit + " loop");
-                docs += dr.document(results[hit].doc).get("title") + "<br>";
-                docs += dr.document(results[hit].doc).get("url") + "<br>";
-                docs += "<br><br>";
-
+            for (int i : results.keySet()) {
+                finalResponse += "<div class=\"result\">";
+                finalResponse += i + ". ";
+                finalResponse += "<span> (" +results.get(i)[0] + ") </span>" + " ";
+                finalResponse += "<span>" + results.get(i)[1] + "</span>";
+                finalResponse += "<br>";
+                finalResponse += "<a href=\"" + "http://" + results.get(i)[2] + "\">" + results.get(i)[2] + "</a>";
+                finalResponse += "<br>";
+                finalResponse += "<br><br>";
+                finalResponse += "</div>";
             }
 
-            return docs;
+            return finalResponse;
         });
 
-
-        // this is just what you can do with the request
+        // this is just what you can do with the request but we don't need it
         Spark.get("/searchExample", (request, response) -> {
             String resultsToPrint = "the request you passed has parameter map:" + Utils.getParamMapFromRequest(request) + "<br>";
             resultsToPrint += "value of query param 'search': " + request.queryParams("search") + "<br>";
@@ -56,7 +47,4 @@ public class ServiceMain {
             return renderer.renderContent("index.html");
         });
     }
-
-
-
 }
