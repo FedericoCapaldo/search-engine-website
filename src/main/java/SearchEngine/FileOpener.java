@@ -3,10 +3,8 @@ package SearchEngine;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -73,5 +71,12 @@ public class FileOpener
         }
 
         return directories;
+    }
+
+    public static String getBaseFolder() throws UnsupportedEncodingException {
+        String filePath = URLDecoder.decode(FileOpener.class.getProtectionDomain().getCodeSource().getLocation().getPath(), "UTF-8");
+        String base = "FedericoSearchEngine";
+        filePath = filePath.substring(0, filePath.indexOf(base)+base.length());
+        return filePath;
     }
 }

@@ -31,7 +31,7 @@ public class ServiceMain {
                 finalResponse += "<br><br>";
                 finalResponse += "</div>";
             }
-
+            searchEngine.shutdown();
             return finalResponse;
         });
 

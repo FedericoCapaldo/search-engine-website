@@ -19,7 +19,7 @@ public class SearchEngine
 	{
 		try
 		{
-			String indexDirectory = HTML.getBaseFolder() + File.separator + "index" + File.separator;
+			String indexDirectory = FileOpener.getBaseFolder() + File.separator + "index" + File.separator;
 			indexer = new Indexer(indexDirectory);
 //			indexer.buildIndex();
 			searcher = new Searcher(indexer.getIndexer());
@@ -56,7 +56,6 @@ public class SearchEngine
 		}
 		return formatted;
 	};
-
 
 
 	public void shutdown() {
