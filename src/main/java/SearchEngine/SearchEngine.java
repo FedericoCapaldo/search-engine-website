@@ -1,3 +1,10 @@
+// Note: To give credit where it is due, some of the code below in
+// buildSnippet(...) was guided by:
+// https://hrycan.com/2009/10/25/lucene-highlighter-howto/.
+// Though it is not an exact copy, the general layout of the function
+// resembles some of the code found in the article.
+
+
 package SearchEngine;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
