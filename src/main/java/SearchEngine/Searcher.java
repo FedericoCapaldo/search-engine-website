@@ -79,6 +79,6 @@ public class Searcher
 		System.out.println("query: " + q + ": " + booleanQueryBuilder.build());
 
 		booleanQueryBuilder.setMinimumNumberShouldMatch(1);
-		return indexSearcher.search(booleanQueryBuilder.build(), 25).scoreDocs;
+		return indexSearcher.search(booleanQueryBuilder.build(), 500).scoreDocs;
 	}
 }

@@ -1,6 +1,5 @@
 package SearchEngine;
 
-import Service.HTML;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.ParseException;

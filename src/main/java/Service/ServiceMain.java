@@ -4,11 +4,11 @@ import SearchEngine.SearchEngine;
 import spark.Spark;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class ServiceMain {
-
-
 
     public static void main(String args[]) throws IOException {
         HTML renderer = new HTML();
@@ -25,20 +25,32 @@ public class ServiceMain {
 
         Spark.get("/search", (request, response) -> {
             String query = request.queryParams("search");
+
+            Date startDate = new Date();
+            long startMS = startDate.getTime();
+
             HashMap<Integer, String[]> results = searchEngine.search(query);
+
+            Date endDate = new Date();
+            long endMS = endDate.getTime();
+
             StringBuilder finalResponse = new StringBuilder();
             StringBuilder res = new StringBuilder();
 
+            double totalS = (double) TimeUnit.MILLISECONDS.toMillis(endMS - startMS) / 1000;
+
+            System.out.println(startMS);
+            System.out.println(endMS);
+            finalResponse.append("<p class=\"time\">" + results.size() + " results (" + totalS + " seconds)</p>");
             for (int i : results.keySet()) {
                 finalResponse.append("<p class=\"result no_margin\">");
-                finalResponse.append("<a href=\"" + "http://" + results.get(i)[2] + "\">" + results.get(i)[1] + "</a>");
+                finalResponse.append("<a href=\"" + "http://" + results.get(i)[2] + "\" target = _blank>" + results.get(i)[1] + "</a>");
                 finalResponse.append("<p class = \"no_margin green_text\">" + results.get(i)[2]);
                 finalResponse.append("<span class = \"no margin sub_text\">" + " | " + i + ", " + results.get(i)[0] + "</span></p>");
                 finalResponse.append("<p class = \"snipper_text\">" + results.get(i)[3] + "</p></p>");
             }
 
             res.append(HTML.getHTML() + finalResponse.toString() + "</body></html>");
-            // searchEngine.shutdown();
             return res.toString();
         });
 
