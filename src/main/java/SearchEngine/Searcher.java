@@ -76,7 +76,7 @@ public class Searcher
 			booleanQueryBuilder.add(boostedBooleanQuery, BooleanClause.Occur.SHOULD);
 		}
 
-		System.out.println("QUERY: " + booleanQueryBuilder.build());
+		System.out.println("query: " + q + ": " + booleanQueryBuilder.build());
 
 		booleanQueryBuilder.setMinimumNumberShouldMatch(1);
 		return indexSearcher.search(booleanQueryBuilder.build(), 25).scoreDocs;
