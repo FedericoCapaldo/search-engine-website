@@ -6,6 +6,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryparser.flexible.standard.QueryParserUtil;
 import org.apache.lucene.search.*;
 import org.apache.lucene.util.QueryBuilder;
 
@@ -71,9 +72,12 @@ public class Searcher
 			BooleanClause.Occur clause = strictFields.contains(Parser.REQUIRED_TAGS[i]) ? BooleanClause.Occur.MUST : BooleanClause.Occur.SHOULD;
 
 			Query booleanQuery = queryBuilder.createBooleanQuery(Parser.REQUIRED_TAGS[i], q, clause);
-			Query boostedBooleanQuery = new BoostQuery(booleanQuery, weight);
 
-			booleanQueryBuilder.add(boostedBooleanQuery, BooleanClause.Occur.SHOULD);
+			if (booleanQuery != null)
+			{
+				Query boostedBooleanQuery = new BoostQuery(booleanQuery, weight);
+				booleanQueryBuilder.add(boostedBooleanQuery, BooleanClause.Occur.SHOULD);
+			}
 		}
 
 		System.out.println("query: " + q + ": " + booleanQueryBuilder.build());

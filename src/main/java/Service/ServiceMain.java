@@ -1,6 +1,7 @@
 package Service;
 
 import SearchEngine.SearchEngine;
+import org.apache.lucene.queryparser.flexible.standard.QueryParserUtil;
 import spark.Spark;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class ServiceMain {
         Spark.get("/", (request, response) -> renderer.renderContent("index.html"));
 
         Spark.get("/search", (request, response) -> {
-            String query = request.queryParams("search");
+            String query = QueryParserUtil.escape(request.queryParams("search"));
 
             Date startDate = new Date();
             long startMS = startDate.getTime();
