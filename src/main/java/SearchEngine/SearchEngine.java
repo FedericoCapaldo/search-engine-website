@@ -71,8 +71,6 @@ public class SearchEngine
 	private String buildSnippet(ScoreDoc result, String query)
 	{
 		StringBuilder snippet = new StringBuilder();
-
-		System.out.println("\n");
 		try
 		{
 			QueryParser parser = new QueryParser("", new StandardAnalyzer());

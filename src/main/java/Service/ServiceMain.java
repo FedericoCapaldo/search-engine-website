@@ -32,9 +32,9 @@ public class ServiceMain {
             for (int i : results.keySet()) {
                 finalResponse.append("<p class=\"result no_margin\">");
                 finalResponse.append("<a href=\"" + "http://" + results.get(i)[2] + "\">" + results.get(i)[1] + "</a>");
-                finalResponse.append("<p class = \"no_margin green_text\">" + results.get(i)[2] + "</p>");
-                finalResponse.append("<p class = \"sub_text\">" + i + ", " + results.get(i)[0] + "</p>");
-                finalResponse.append("<p class = \"sub_text\">" + results.get(i)[3] + "</p></p>");
+                finalResponse.append("<p class = \"no_margin green_text\">" + results.get(i)[2]);
+                finalResponse.append("<span class = \"no margin sub_text\">" + " | " + i + ", " + results.get(i)[0] + "</span></p>");
+                finalResponse.append("<p class = \"snipper_text\">" + results.get(i)[3] + "</p></p>");
             }
 
             res.append(HTML.getHTML() + finalResponse.toString() + "</body></html>");
