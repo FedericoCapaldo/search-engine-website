@@ -59,11 +59,14 @@ public class SearchEngine
 
 
 	public void shutdown() {
+		System.out.print("shutting down...");
 		try {
 			indexer.getIndexer().close();
 			dr.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		System.out.println("done");
 	}
 }

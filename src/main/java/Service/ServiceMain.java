@@ -15,6 +15,8 @@ public class ServiceMain {
 
         SearchEngine searchEngine = new SearchEngine();
 
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> searchEngine.shutdown()));
+
         Spark.get("/search", (request, response) -> {
             String query = request.queryParams("search");
             HashMap<Integer, String[]> results = searchEngine.search(query);
