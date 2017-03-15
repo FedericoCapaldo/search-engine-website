@@ -5,6 +5,7 @@ import spark.Request;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class Utils {
     public static Map<String, String> getParamMapFromRequest(Request request){
         Map<String, String> paramMap = new HashMap<>();

@@ -6,7 +6,6 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.queryparser.flexible.standard.QueryParserUtil;
 import org.apache.lucene.search.*;
 import org.apache.lucene.util.QueryBuilder;
 
@@ -14,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+
 
 public class Searcher
 {
@@ -56,6 +56,7 @@ public class Searcher
 		queryParser.setDefaultOperator(QueryParser.Operator.OR);
 	}
 
+
 	public DirectoryReader getIndexReader()
 	{
 		return (DirectoryReader) indexSearcher.getIndexReader();
@@ -80,7 +81,7 @@ public class Searcher
 			}
 		}
 
-		System.out.println("query: " + q + ": " + booleanQueryBuilder.build());
+		System.out.println("query: " + q + "\n       " + booleanQueryBuilder.build());
 
 		booleanQueryBuilder.setMinimumNumberShouldMatch(1);
 		return indexSearcher.search(booleanQueryBuilder.build(), 100).scoreDocs;

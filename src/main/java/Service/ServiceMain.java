@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-public class ServiceMain {
 
+public class ServiceMain {
     public static void main(String args[]) throws IOException {
         HTML renderer = new HTML();
         SearchEngine searchEngine = new SearchEngine();

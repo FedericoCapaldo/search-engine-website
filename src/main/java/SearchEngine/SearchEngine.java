@@ -14,10 +14,10 @@ import java.util.HashMap;
 
 public class SearchEngine
 {
-
 	private Indexer indexer;
 	private Searcher searcher;
 	private DirectoryReader dr;
+
 
 	public SearchEngine()
 	{
@@ -35,8 +35,8 @@ public class SearchEngine
 		}
 	}
 
-	public HashMap<Integer, String[]> search(String query) {
 
+	public HashMap<Integer, String[]> search(String query) {
 		try {
 			ScoreDoc[] results = searcher.search(query);
 			return formatResult(results, query);
@@ -46,6 +46,14 @@ public class SearchEngine
 		return null;
 	}
 
+	public void shutdown() {
+		try {
+			indexer.getIndexer().close();
+			dr.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 
 	private HashMap<Integer, String[]> formatResult(ScoreDoc[] results, String query) {
@@ -66,19 +74,18 @@ public class SearchEngine
 		return formatted;
 	}
 
-
 	private String buildSnippet(ScoreDoc result, String query)
 	{
 		StringBuilder snippet = new StringBuilder();
 		try
 		{
-			QueryParser parser = new QueryParser("", new StandardAnalyzer());
-			QueryScorer scorer = new QueryScorer(parser.parse(query));
-			Highlighter highlighter = new Highlighter(scorer);
-			highlighter.setTextFragmenter(new SimpleSpanFragmenter(scorer, 80));
+			QueryParser queryParser = new QueryParser("body", new StandardAnalyzer());
+			QueryScorer queryScorer = new QueryScorer(queryParser.parse(query));
+			Highlighter highlighter = new Highlighter(queryScorer);
 			highlighter.setMaxDocCharsToAnalyze(1000000);
+			highlighter.setTextFragmenter(new SimpleSpanFragmenter(queryScorer, 75));
 
-			String[] snippets = highlighter.getBestFragments(new StandardAnalyzer(), "", dr.document(result.doc).get("body"), 3);
+			String[] snippets = highlighter.getBestFragments(new StandardAnalyzer(), "body", dr.document(result.doc).get("body"), 3);
 
 			int currentPos = 0;
 
@@ -88,7 +95,7 @@ public class SearchEngine
 				{
 					snippet.append(snippets[i].charAt(pos));
 
-					if (snippets[i].charAt(pos) == ' ' && currentPos >= 100)
+					if (Character.isWhitespace(snippets[i].charAt(pos)) && currentPos >= 100)
 					{
 						snippet.append("<br>");
 						currentPos = 0;
@@ -104,15 +111,5 @@ public class SearchEngine
 		}
 
 		return snippet.toString();
-	}
-
-
-	public void shutdown() {
-		try {
-			indexer.getIndexer().close();
-			dr.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

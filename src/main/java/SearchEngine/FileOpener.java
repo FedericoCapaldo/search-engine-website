@@ -8,6 +8,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class FileOpener
 {
     // ensure this path is terminated with a forward slash
@@ -32,7 +33,6 @@ public class FileOpener
 
         return content.toString();
     }
-
 
     // find all files in a directory, included its subdirectories
     public static ArrayList<String> listOfFilesInFolder(File folder) {

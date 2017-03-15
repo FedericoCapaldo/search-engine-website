@@ -16,6 +16,7 @@ public class Indexer
 {
     private IndexWriter indexer;
 
+
     public Indexer(String indexDirectory) throws IOException
     {
         Directory directory = FSDirectory.open(Paths.get(indexDirectory));
@@ -25,6 +26,7 @@ public class Indexer
 
         indexer = new IndexWriter(directory, configuration);
     }
+
 
     public IndexWriter getIndexer()
     {

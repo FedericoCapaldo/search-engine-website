@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
 public class HTML {
     // return content of a html file a string
     public String renderContent(String htmlFile) {
@@ -35,6 +36,11 @@ public class HTML {
         return filePath;
     }
 
+    public static String getHTML(){
+        return getHead() + getBody();
+    }
+
+
     private static String getHead(){
         return "<html><head><meta charset=\"UTF-8\"><title>121 Search Engine | Eric, Danilo, Federico</title><style>" + getBootstrap() + "</style></head>";
     }
@@ -46,9 +52,4 @@ public class HTML {
     private static String getBody(){
         return "<body><form class=\"form-inline overall_wrapper\" action=\"/search\"> <div class=\"form-group larger_text\"> <input type=\"text\" class=\"form-control\" name=\"search\"> </div><div class=\"form-group border_left\"> <button type=\"submit\" value=\"Search\" class=\"button\">Search</button> </div></form>";
     }
-
-    public static String getHTML(){
-        return getHead() + getBody();
-    }
-
 }

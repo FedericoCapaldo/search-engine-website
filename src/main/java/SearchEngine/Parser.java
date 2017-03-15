@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class Parser
 {
     public static String[] REQUIRED_TAGS = {"url", "title", "h1", "h2", "h3", "h4", "h5", "h6", "strong", "em", "a", "b", "i", "u", "body", "p", "table", "tbody", "tr", "th", "td", "span"};
+
 
     public static String parseHTML(String file_path) throws IOException
     {
@@ -34,7 +36,6 @@ public class Parser
         for (String tag : REQUIRED_TAGS)
         {
             Elements contents = doc.select(tag);
-
             content.put(tag, new ArrayList<>());
 
             for (Element e : contents)
