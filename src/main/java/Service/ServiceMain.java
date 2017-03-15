@@ -12,10 +12,16 @@ public class ServiceMain {
 
     public static void main(String args[]) throws IOException {
         HTML renderer = new HTML();
-
         SearchEngine searchEngine = new SearchEngine();
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> searchEngine.shutdown()));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.print("shutting down...");
+			searchEngine.shutdown();
+			Spark.stop();
+            System.out.println("done");
+		}));
+
+        Spark.get("/", (request, response) -> renderer.renderContent("index.html"));
 
         Spark.get("/search", (request, response) -> {
             String query = request.queryParams("search");
@@ -41,10 +47,6 @@ public class ServiceMain {
             resultsToPrint += "value of query param 'search': " + request.queryParams("search") + "<br>";
             resultsToPrint += "<a href=\"SomeOtherWebPage.html\">go to SomeOtherWebPage.html<//href>";
             return resultsToPrint;
-        });
-
-        Spark.get("/", (request, response) -> {
-            return renderer.renderContent("index.html");
         });
     }
 }
