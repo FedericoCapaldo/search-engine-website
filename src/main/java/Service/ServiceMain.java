@@ -39,8 +39,6 @@ public class ServiceMain {
 
             double totalS = (double) TimeUnit.MILLISECONDS.toMillis(endMS - startMS) / 1000;
 
-            System.out.println(startMS);
-            System.out.println(endMS);
             finalResponse.append("<p class=\"time\">" + results.size() + " results (" + totalS + " seconds)</p>");
             for (int i : results.keySet()) {
                 finalResponse.append("<p class=\"result no_margin\">");
